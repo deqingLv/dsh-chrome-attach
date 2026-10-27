@@ -2,7 +2,7 @@
 
 [English](README.md) · 简体中文 · MIT · DeepSeek Harness 插件
 
-把**当前 Chrome 标签页**变成对话里的图片附件——ChatGPT 里「+ → attach 浏览器」的那个动作：截图、进草稿、可继续打字，回车才发送。
+把**当前 Chrome 标签页**变成对话里的图片附件——ChatGPT 里「+ → attach 浏览器」的那个动作：截图、进草稿，同时把页面的 **标题和地址**写成一行文本，可继续打字，回车才发送。这样模型不只知道页面长什么样，还知道它是什么页面。
 
 插件按能力自动降级，**没有 `dsh-chrome-bridge`、没有 DSH Bridge 扩展也能用**，只是截图质量不同：
 
@@ -38,9 +38,17 @@ git clone https://github.com/deqingLv/dsh-chrome-attach.git
 
 输入框左下的 **`+`** 展开列表里多一行，紧挨在「添加文件」下面、「添加」组内：
 
-> [Chrome 彩色标志] **附加 Chrome** · attach —— 把当前页面截图放进输入框
+> [Chrome 彩色标志] **附加 Chrome** · attach —— 截图当前页面，附带标题和地址
 
 点它就会截当前活动标签页（或降级为窗口），图片进当前会话草稿，**不自动发送**，可以继续打字。也可以直接输入 `/attach` 回车。
+
+图片本身不携带页面信息——模型只看得到像素，不知道这是哪个网址。所以这一行同时会通过输入框自己的 `inputActions` 门面向草稿里写一行文本：
+
+```
+Chrome 标签页：Kaboo — https://kaboo.bytedance.net/?section=team
+```
+
+这行和图片是同一份草稿：它是普通文字，可以随意编辑或删掉，回车时一起发出。如果草稿正在发送中、或当前会话没有可编辑草稿，就只有图片进去，提示里会写「已附上（页面地址未能写入输入框）：…」。
 
 附件名带页面标题，例如 `DeepSeek-Harness-155812.png`。
 
@@ -91,9 +99,10 @@ git clone https://github.com/deqingLv/dsh-chrome-attach.git
               └─ window: Chrome AppleScript 取窗口坐标 → screencapture -R
         ← { dataUrl, title, url, source, degraded }
   └─ dataUrl → File → 合成 drop → DSH 官方图片 intake → 草稿
+  └─ title + url → inputActions.insertText → 同一份草稿，插入一行
 ```
 
-Host 侧只用 Node 内置模块，不 import profile 里可能解析不到的包。客户端只负责 `+` 菜单里的那一行，图片交给和真实拖拽相同的附件入口。
+Host 侧只用 Node 内置模块，不 import profile 里可能解析不到的包。客户端只负责 `+` 菜单里的那一行，图片交给和真实拖拽相同的附件入口；那一行文本则走 `inputActions`——会话通过 slot prop 提供给插件的输入门面。插件注册一个无界面的 `conversation.input.dock` 条目把它交到手里，因此不直接碰会话，也自动继承门面的阶段/版本校验。
 
 ## 配置
 
@@ -107,6 +116,8 @@ Host 侧只用 Node 内置模块，不 import profile 里可能解析不到的�
 ## 已知限制
 
 - 只截**当前活动标签页**（`bridge`/`cdp`）或**当前 Chrome 窗口**（`window`）。
+- 那行页面信息是写进当前焦点的草稿的，所以需要草稿可编辑；正在发送时图片照样进，这一行会跳过（提示里会说明）。
+- `window` 通道的标题/地址取自最前面那个标签页，描述的是页面而不是整个窗口。
 - `chrome://`、Chrome 应用商店等受保护页面无法通过 `chrome.debugger` 截图；`window` 模式不受此限制。
 - `window` 模式需要屏幕录制权限；首次失败会给出系统设置路径。
 - 图片走本机回环路由，不上传；最终以 DSH 附件形式落盘。

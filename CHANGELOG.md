@@ -2,6 +2,17 @@
 
 All notable changes to this project. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.8] — 2026-10-27
+
+### Added
+
+- The `+` menu row now also writes the captured page's **title and URL** into the same draft as one plain-text line (`Chrome 标签页：<title> — <url>`), so the model can tell which page the screenshot shows. The host already returned `title`/`url`; until now they only reached a toast.
+
+### Changed
+
+- The page line goes through the composer's own `inputActions` façade, which the conversation publishes to session slots as a prop; the plugin registers a headless `conversation.input.dock` entry to hold on to it. Insertion therefore obeys the façade's phase and draft-revision guards, and the plugin still never touches the session directly.
+- When the façade refuses (message being sent, no editable draft), the image still attaches and the toast reports the skipped line.
+
 ## [0.2.7] — 2026-10-27
 
 ### Added

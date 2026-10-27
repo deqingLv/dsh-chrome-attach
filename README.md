@@ -1,6 +1,6 @@
 # dsh-chrome-attach
 
-**Attach the current Chrome tab to your conversation.** One pick in the composer screenshots the page you are looking at and drops it into the draft as an image attachment — the same move as ChatGPT's *+ → attach browser page*. The image waits in the draft; nothing is sent until you press Enter.
+**Attach the current Chrome tab to your conversation.** One pick in the composer screenshots the page you are looking at, drops it into the draft as an image attachment, and types the tab's **title and URL** on a line next to it — the same move as ChatGPT's *+ → attach browser page*, except the model also learns *which* page it is looking at. Everything waits in the draft; nothing is sent until you press Enter.
 
 [简体中文](README.zh-CN.md) · MIT · a DeepSeek Harness plugin
 
@@ -38,9 +38,17 @@ Add the plugin by its absolute **directory** path. It installs as a `link:`, so 
 
 The `+` menu in the composer gains one row, right below *Add files* in the Add section:
 
-> **[Chrome mark] Attach Chrome** · *Screenshot the page into the composer*
+> **[Chrome mark] Attach Chrome** · *Screenshot the page, plus its title and URL*
 
-Clicking it screenshots the active tab (or degrades to the window), puts the image into the current draft, and **does not send**. Keep typing. `/attach` works too.
+Clicking it screenshots the active tab (or degrades to the window), puts the image into the current draft, writes the page line, and **does not send**. Keep typing. `/attach` works too.
+
+An image only tells the model what the pixels look like, not which page it came from, so the row also inserts one line through the composer's own input facade:
+
+```
+Chrome tab: Kaboo — https://kaboo.bytedance.net/?section=team
+```
+
+That line and the image are one draft: it is plain text you can edit or delete, and both leave together when you press Enter. If the draft is mid-send or no editable draft is attached, only the image lands and the toast says the page line was skipped (`已附上（页面地址未能写入输入框）：…`).
 
 Attachment names carry the page title, e.g. `DeepSeek-Harness-155812.png`.
 
@@ -91,9 +99,10 @@ browser (client/client.js)
               └─ window: Chrome AppleScript bounds → screencapture -R
         ← { dataUrl, title, url, source, degraded }
   └─ dataUrl → File → synthetic drop → DSH's image intake → draft
+  └─ title + url → inputActions.insertText → same draft, one line
 ```
 
-The host half only imports Node built-ins, so it never depends on packages the DSH profile may not resolve. The client half is the entry in the `+` menu; it hands the PNG to the same attachment intake a real drag-and-drop uses.
+The host half only imports Node built-ins, so it never depends on packages the DSH profile may not resolve. The client half is the entry in the `+` menu; it hands the PNG to the same attachment intake a real drag-and-drop uses. The page line goes through `inputActions`, the façade the conversation publishes to session slots as a prop — the plugin registers one headless `conversation.input.dock` entry to hold on to it, so it never reaches into the session directly and inherits the façade's phase/revision guards.
 
 ## Configuration
 
@@ -107,6 +116,8 @@ The host half only imports Node built-ins, so it never depends on packages the D
 ## Limitations
 
 - Captures only the **active tab** (`bridge`/`cdp`) or the **frontmost Chrome window** (`window`).
+- The page line is typed into the focused draft, so it needs an editable composer; while a message is being sent the image attaches but the line is skipped (the toast says so).
+- A `window` shot's URL/title come from the same page, so they describe the frontmost tab rather than the whole window.
 - `chrome://` pages and the Chrome Web Store cannot be captured through `chrome.debugger`; the `window` tier is unaffected.
 - The `window` tier needs Screen Recording; failures point at the exact System Settings pane.
 - Images travel over a loopback route and are never uploaded; they end up as a normal DSH attachment.

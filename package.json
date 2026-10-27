@@ -1,7 +1,7 @@
 {
   "name": "dsh-chrome-attach",
-  "version": "0.2.7",
-  "description": "Attach the current Chrome tab as an image attachment in DeepSeek Harness: one pick screenshots the page (or degrades to a macOS window shot) into the draft.",
+  "version": "0.2.8",
+  "description": "Attach the current Chrome tab to a DeepSeek Harness draft: one pick screenshots the page (degrading to a macOS window shot) and writes its title + URL as one text line.",
   "type": "module",
   "license": "MIT",
   "author": "deqingLv",
