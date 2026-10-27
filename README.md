@@ -2,7 +2,13 @@
 
 **Attach the current Chrome tab to your conversation.** One pick in the composer screenshots the page you are looking at, drops it into the draft as an image attachment, and types the tab's **title and URL** on a line next to it — the same move as ChatGPT's *+ → attach browser page*, except the model also learns *which* page it is looking at. Everything waits in the draft; nothing is sent until you press Enter.
 
-[简体中文](README.zh-CN.md) · MIT · a DeepSeek Harness plugin
+[简体中文](README.zh-CN.md) · a DeepSeek Harness plugin
+
+[![npm](https://img.shields.io/npm/v/dsh-chrome-attach?label=npm)](https://www.npmjs.com/package/dsh-chrome-attach)
+[![release](https://img.shields.io/github/v/release/deqingLv/dsh-chrome-attach?label=release)](https://github.com/deqingLv/dsh-chrome-attach/releases)
+[![license](https://img.shields.io/github/license/deqingLv/dsh-chrome-attach)](LICENSE)
+
+![Picking Attach Chrome in the + menu: the screenshot and the page line land in the draft](assets/demo.gif)
 
 The plugin tries three capture tiers in order and uses the first one that works. **No bridge, no extension and no Chrome flags are required** — only the image quality differs:
 
@@ -15,6 +21,16 @@ The plugin tries three capture tiers in order and uses the first one that works.
 The default chain is `bridge → cdp → window`; the first tier that succeeds wins. Every response names its `source`, and a window shot is labelled *"window shot, browser UI included"*.
 
 ## Install
+
+Needs a DSH build that ships `commandUi` and the session-slot `inputActions` prop (that is what writes the page line). On older builds the screenshot still attaches; only the line is skipped, and the toast says so.
+
+### From npm
+
+```sh
+dsh plugin --profile desktop add dsh-chrome-attach   # "web" for the web profile
+```
+
+Then refresh the window (`Cmd+R`) or restart DSH — new bundles are not hot-loaded.
 
 ### From a release tarball
 

@@ -1,6 +1,12 @@
 # dsh-chrome-attach
 
-[English](README.md) · 简体中文 · MIT · DeepSeek Harness 插件
+[English](README.md) · DeepSeek Harness 插件
+
+[![npm](https://img.shields.io/npm/v/dsh-chrome-attach?label=npm)](https://www.npmjs.com/package/dsh-chrome-attach)
+[![release](https://img.shields.io/github/v/release/deqingLv/dsh-chrome-attach?label=release)](https://github.com/deqingLv/dsh-chrome-attach/releases)
+[![license](https://img.shields.io/github/license/deqingLv/dsh-chrome-attach)](LICENSE)
+
+![在 + 菜单里选「附加 Chrome」：截图与页面行一起落进草稿](assets/demo.gif)
 
 把**当前 Chrome 标签页**变成对话里的图片附件——ChatGPT 里「+ → attach 浏览器」的那个动作：截图、进草稿，同时把页面的 **标题和地址**写成一行文本，可继续打字，回车才发送。这样模型不只知道页面长什么样，还知道它是什么页面。
 
@@ -15,6 +21,16 @@
 默认按 `bridge → cdp → window` 依次尝试，第一个成功的就用它；返回里带 `source`，窗口截图会在提示里标「窗口截图，含浏览器界面」。
 
 ## 安装
+
+需要带 `commandUi` 与会话槽位 `inputActions` 的 DSH 版本（页面行靠它写入）。更老的版本截图照常、只是不写这一行，提示里会说。
+
+### 从 npm 安装
+
+```sh
+dsh plugin --profile desktop add dsh-chrome-attach   # web 版 profile 写 web
+```
+
+然后**刷新窗口（Cmd+R）或重启 DSH**。新 bundle 不热加载。
 
 ### 用 Release 里的 tgz
 
