@@ -4,7 +4,6 @@
 
 [简体中文](README.zh-CN.md) · a DeepSeek Harness plugin
 
-[![npm](https://img.shields.io/npm/v/dsh-chrome-attach?label=npm)](https://www.npmjs.com/package/dsh-chrome-attach)
 [![release](https://img.shields.io/github/v/release/deqingLv/dsh-chrome-attach?label=release)](https://github.com/deqingLv/dsh-chrome-attach/releases)
 [![license](https://img.shields.io/github/license/deqingLv/dsh-chrome-attach)](LICENSE)
 
