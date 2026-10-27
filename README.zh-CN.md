@@ -2,10 +2,11 @@
 
 [English](README.md) · DeepSeek Harness 插件
 
+[![npm](https://img.shields.io/npm/v/dsh-chrome-attach?label=npm)](https://www.npmjs.com/package/dsh-chrome-attach)
 [![release](https://img.shields.io/github/v/release/deqingLv/dsh-chrome-attach?label=release)](https://github.com/deqingLv/dsh-chrome-attach/releases)
 [![license](https://img.shields.io/github/license/deqingLv/dsh-chrome-attach)](LICENSE)
 
-![在 + 菜单里选「附加 Chrome」：截图与页面行一起落进草稿](assets/demo.gif)
+![在 + 菜单里选「附加 Chrome」：截图与页面行一起落进草稿](https://raw.githubusercontent.com/deqingLv/dsh-chrome-attach/main/assets/demo.gif)
 
 把**当前 Chrome 标签页**变成对话里的图片附件——ChatGPT 里「+ → attach 浏览器」的那个动作：截图、进草稿，同时把页面的 **标题和地址**写成一行文本，可继续打字，回车才发送。这样模型不只知道页面长什么样，还知道它是什么页面。
 

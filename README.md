@@ -4,10 +4,11 @@
 
 [简体中文](README.zh-CN.md) · a DeepSeek Harness plugin
 
+[![npm](https://img.shields.io/npm/v/dsh-chrome-attach?label=npm)](https://www.npmjs.com/package/dsh-chrome-attach)
 [![release](https://img.shields.io/github/v/release/deqingLv/dsh-chrome-attach?label=release)](https://github.com/deqingLv/dsh-chrome-attach/releases)
 [![license](https://img.shields.io/github/license/deqingLv/dsh-chrome-attach)](LICENSE)
 
-![Picking Attach Chrome in the + menu: the screenshot and the page line land in the draft](assets/demo.gif)
+![Picking Attach Chrome in the + menu: the screenshot and the page line land in the draft](https://raw.githubusercontent.com/deqingLv/dsh-chrome-attach/main/assets/demo.gif)
 
 The plugin tries three capture tiers in order and uses the first one that works. **No bridge, no extension and no Chrome flags are required** — only the image quality differs:
 
