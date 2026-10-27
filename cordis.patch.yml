@@ -1,0 +1,6 @@
+# dsh-chrome-attach bundle patch: one insert over the profile root.
+# Host half registers one exact Fetch route; the client half adds the composer
+# button and delivers the PNG through the official image intake.
+- insert:
+    - id: chrome-attach
+      name: 'dsh-chrome-attach'

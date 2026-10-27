@@ -1,0 +1,53 @@
+{
+  "name": "dsh-chrome-attach",
+  "version": "0.2.7",
+  "description": "Attach the current Chrome tab as an image attachment in DeepSeek Harness: one pick screenshots the page (or degrades to a macOS window shot) into the draft.",
+  "type": "module",
+  "license": "MIT",
+  "author": "deqingLv",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "client",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "chrome",
+    "screenshot",
+    "cdp",
+    "macos"
+  ],
+  "homepage": "https://github.com/deqingLv/dsh-chrome-attach#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deqingLv/dsh-chrome-attach.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deqingLv/dsh-chrome-attach/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node --check lib/index.js && node --check lib/capture.js && node --check lib/errors.js && node --check lib/providers/bridge.js && node --check lib/providers/cdp.js && node --check lib/providers/window.js && node --check client/client.js"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}
