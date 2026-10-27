@@ -57,8 +57,10 @@ git clone https://github.com/deqingLv/dsh-chrome-attach.git
 不需要扩展，也不需要屏幕录制。Chrome 136 收紧了 `--remote-debugging-port`，但 Chrome 现在自带一个开关：
 
 1. 打开 `chrome://inspect/#remote-debugging`，勾选 **Remote debugging**；
-2. 在 DSH 里点「附加 Chrome」，首次连接会弹一次授权，允许即可；
+2. 在 DSH 里点「附加 Chrome」，首次连接会弹一次授权，允许即可；之后保持常驻连接，不再弹；
 3. Chrome 把选中的端口写进 `<profile>/DevToolsActivePort`，插件自动读取。登录态、标签页、扩展都不受影响。
+
+这个开关受策略控制（`DevToolsRemoteDebuggingAllowed`）；公司设备上被策略禁用时勾选框是灰的，此时只能走 `window` 通道或 `bridge`。
 
 已经在用调试端口启动 Chrome 的，插件也会探测 `9222`/`9223`，以及 `DSH_CHROME_DEBUG_PORT` 指定的端口：
 

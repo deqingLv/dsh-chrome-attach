@@ -60,6 +60,8 @@ The clean-tab fallback that needs no extension and no Screen Recording. Chrome 1
 2. Click **Attach Chrome** in DSH; the first connection asks once whether to allow the app — allow it.
 3. Chrome writes the chosen port to `<profile>/DevToolsActivePort`, and the plugin reads it. Your profile, logins and extensions stay exactly as they are.
 
+The switch is governed by the `DevToolsRemoteDebuggingAllowed` policy. On a managed machine where it is disabled the checkbox is greyed out — use the `window` tier or `bridge` instead.
+
 Already launching Chrome with a debug port? The plugin also probes `9222`/`9223` and any port named by `DSH_CHROME_DEBUG_PORT`:
 
 ```sh
